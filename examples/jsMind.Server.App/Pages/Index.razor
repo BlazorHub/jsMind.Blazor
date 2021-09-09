@@ -1,41 +1,24 @@
 ﻿@page "/"
 
-<h1>jsMind Demo</h1>
 
 <pre>SelectedNodeId = @_selectedNodeId</pre>
 <pre>SelectedNodeIds = @string.Join(",", _selectedNodeIds)</pre>
 
 <div>
-    <label>TreeNodes</label>
+    <label>MindMaps</label>
     <MindMapTreeContainer @ref="_myTreeNodeContainer"
                           Options="@_options"
                           Data="@_treeData"
                           OnSelectNode="@OnSelectTreeNode"
                           OnMultiSelectNodes="@OnMultiSelectNodes"
                           OnShow="@OnShowTree"
+                          OnResize="@OnResize"
                           style="border:solid 1px blue; background:#f4f4f4;" />
-    <button class="btn btn-primary oi oi-plus" @onclick="AddTreeNode"></button>
-    <button class="btn btn-primary oi oi-minus" @onclick="RemoveTreeNode"></button>
-    <button class="btn btn-primary oi oi-collapse-down" @onclick="CollapseTree"></button>
-    <button class="btn btn-primary oi oi-check" @onclick="SelectTreeNode"></button>
-    <button class="btn btn-primary oi oi-action-undo" @onclick="ClearSelect"></button>
-</div>
-<hr />
-<div>
-    <label>ArrayNodes with parentId</label>
-    <MindMapArrayContainer @ref="_myArrayNodeContainer" Options="@_options" Data="@_arrayData1" style="border:solid 1px red; background:#f4f4f4;" />
-    <button class="btn btn-primary oi oi-plus" @onclick="AddArrayNode"></button>
-</div>
-<hr />
-<div>
-    <label>ArrayNodes with Parent</label>
-    <MindMapArrayContainer options="@_options" data="@_arrayData2" style="border:solid 1px green; background:#f4f4f4;" />
 </div>
 
 @code
 {
     private MindMapTreeContainer _myTreeNodeContainer;
-    private MindMapArrayContainer _myArrayNodeContainer;
     private string _selectedNodeId = "";
     private string[] _selectedNodeIds = new string[0];
 
@@ -51,121 +34,185 @@
         RootNode = new MindMapTreeNode
         {
             Id = "root",
-            Topic = "-Root-",
+            Topic = "-Woodern Picture-",
             Children = new List<MindMapTreeNode>
 {
                 new MindMapTreeNode
                 {
-                    Id = "sub1.0",
-                    Topic = "sub1.0-right"
-                },
-                new MindMapTreeNode
+                    Id = "glass",
+                    Topic = "Glass",
+                    Direction = MindMapNodeDirection.Right,
+                    Children = new List<MindMapTreeNode>()
+        {
+                        new MindMapTreeNode
+                        {
+                            Id = "glass.merchuet",
+                            Topic = "Glass MERCHUET",
+                            Direction = MindMapNodeDirection.Right,
+                            Children = new List<MindMapTreeNode>()
                 {
-                    Id = "sub1.1",
-                    Topic = "sub1.1-right",
-                    Children = new List<MindMapTreeNode>
-    {
-                        new MindMapTreeNode
-                        {
-                            Id = "sub1.1a",
-                            Topic = "sub1.1a-right"
-                        },
-                        new MindMapTreeNode
-                        {
-                            Id = "sub1.1b",
-                            Topic = "sub1.1b-right"
-                        },
+                                 new MindMapTreeNode
+                                 {
+                                     Id = "pos",
+                                     Topic = "Pos",
+                                     Direction = MindMapNodeDirection.Right,
+                                     Children = new List<MindMapTreeNode>()
+                         {
+                                          new MindMapTreeNode
+                                          {
+                                              Id = "pos123",
+                                              Topic = "Pos123",
+                                              Direction = MindMapNodeDirection.Right,
+                                          },
+                                          new MindMapTreeNode
+                                          {
+                                              Id = "pos124",
+                                              Topic = "Pos124",
+                                              Direction = MindMapNodeDirection.Right,
+                                          }
+                                     }
+                                 }
+                            }
+                        }
                     }
                 },
                 new MindMapTreeNode
                 {
-                    Id = "sub2",
-                    Topic = "sub2-left",
-                    Direction = MindMapNodeDirection.Left
+                    Id = "other.wood",
+                    Topic = "Other Wood",
+                    Children = new List<MindMapTreeNode>
+        {
+                        new MindMapTreeNode
+                        {
+                            Id = "other.wood.wordcompany",
+                            Topic = "Other Wood Wood Company",
+                            Children = new List<MindMapTreeNode>
+                {
+                                new MindMapTreeNode   {
+                                    Id = "other.wood1",
+                                    Topic = "Other Wood1",
+                                    Children = new List<MindMapTreeNode>
+                        {
+                                        new MindMapTreeNode
+                                        {
+                                            Id = "undisclosed.source",
+                                            Topic = "Undisclosed Source"
+                                        },
+                                     }
+                                },
+                                new MindMapTreeNode
+                                {
+                                    Id = "other.wood2",
+                                    Topic = "Other Wood2",
+                                    Children = new List<MindMapTreeNode>
+                        {
+                                        new MindMapTreeNode
+                                        {
+                                            Id = "undisclosed.source",
+                                            Topic = "Undisclosed Source"
+                                        },
+                                    }
+                                 },
+                            }
+                        },
+                        new MindMapTreeNode
+                        {
+                            Id = "essentinal.oil",
+                            Topic = "Essentinal Oil",
+                            Children = new List<MindMapTreeNode>
+                {
+                                new MindMapTreeNode   {
+                                    Id = "camelia",
+                                    Topic = "camelia",
+                                    Children = new List<MindMapTreeNode>
+                        {
+                                        new MindMapTreeNode
+                                        {
+                                            Id = "camelia.kiss.seed",
+                                            Topic = "Camelia Kiss Seed"
+                                        },
+                                     }
+                                },
+                                new MindMapTreeNode
+                                {
+                                    Id = "raw.material",
+                                    Topic = "Raw Material",
+
+                                 },
+                            }
+                        },
+                         new MindMapTreeNode
+                         {
+                             Id = "plywood",
+                             Topic = "PlyWood",
+                             Direction = MindMapNodeDirection.Right,
+                         },
+                         new MindMapTreeNode
+                          {
+                              Id = "Special.adfr",
+                              Topic = "Special ADFR",
+                              Direction = MindMapNodeDirection.Right
+                          }
+                    }
+                },
+                new MindMapTreeNode
+                {
+                    Id = "wood",
+                    Topic = "Wood",
+                    Direction = MindMapNodeDirection.Right,
+                    Children = new List<MindMapTreeNode>
+        {
+                         new MindMapTreeNode
+                         {
+                             Id = "my.wood",
+                             Topic = "My Wood"
+                         },
+                     }
                 }
             }
         }
     };
 
-    readonly MindMapArrayData _arrayData1 = new MindMapArrayData
-    {
-        Nodes = new List<MindMapArrayNode>
-{
-            new MindMapArrayNode
-            {
-                IsRoot = true,
-                Id = "root",
-                Topic = "-Root-"
-            },
-            new MindMapArrayNode
-            {
-                Id = "sub1",
-                Topic = "sub1-right",
-                ParentId = "root"
-            },
-            new MindMapArrayNode
-            {
-                Id = "sub2",
-                Topic = "sub2-left",
-                ParentId = "root",
-                Direction = MindMapNodeDirection.Left
-            }
-        }
-    };
-
-    readonly MindMapArrayData _arrayData2 = new MindMapArrayData
-    {
-        Nodes = new List<MindMapArrayNode>()
-    };
 
     protected override Task OnInitializedAsync()
     {
-        var root = new MindMapArrayNode
-        {
-            IsRoot = true,
-            Id = "root",
-            Topic = "-Root-"
-        };
-        _arrayData2.Nodes.Add(root);
-
-        var sub1 = new MindMapArrayNode
-        {
-            Id = "sub1",
-            Topic = "sub1-right",
-            Parent = root
-        };
-
-        var sub2 = new MindMapArrayNode
-        {
-            Id = "sub2",
-            Topic = "sub2-left",
-            Parent = root,
-            Direction = MindMapNodeDirection.Left
-        };
-        _arrayData2.Nodes.Add(sub1);
-        _arrayData2.Nodes.Add(sub2);
-
         return base.OnInitializedAsync();
     }
 
-    async Task OnShowTree(EventArgs args)
+    Task OnResize(ValueEventArgs<string> args)
     {
+        System.Console.WriteLine($"OnResize for {args.Value}");
+
+        return Task.CompletedTask;
+    }
+
+    async Task OnShowTree(ValueEventArgs<string> args)
+    {
+        System.Console.WriteLine($"OnShowTree for {args.Value}");
+        if (_myTreeNodeContainer.Nodes is not null)
+        {
+            foreach (var node in _myTreeNodeContainer.Nodes)
+            {
+                System.Console.WriteLine($"Node : {node.Id} - {node.Topic}");
+            }
+        }
+
+
         var found = await _myTreeNodeContainer.GetNode("root");
-        var selected = new List<MindMapTreeNode>
-{
-            _treeData.RootNode,
-            _treeData.RootNode.Children.Last()
-        };
-        await _myTreeNodeContainer.SelectNodes(selected);
-        _selectedNodeIds = selected.Select(n => n.Id).ToArray();
+        //var selected = new List<MindMapTreeNode>
+        //{
+        //    _treeData.RootNode,
+        //    _treeData.RootNode.Children.Last()
+        //};
+        //await _myTreeNodeContainer.SelectNodes(selected);
+        //_selectedNodeIds = selected.Select(n => n.Id).ToArray();
 
         await _myTreeNodeContainer.Expand();
     }
 
-    void OnSelectTreeNode(MindMapEventArgs<MindMapTreeNode> args)
+    void OnSelectTreeNode(MindMapSingleSelectEventArgs<MindMapTreeNode> args)
     {
-        var treeNode = args.Node;
-        //_selectedNodeId = treeNode.GetType().Name + " - " + treeNode.Id;
+        _selectedNodeId = args.Node != null ? args.Node.GetType().Name + " - " + args.Node.Id + " and selected = " + args.Selected : "/none/";
     }
 
     void OnMultiSelectNodes(MindMapMultiSelectEventArgs<MindMapTreeNode> args)
@@ -209,19 +256,6 @@
         await _myTreeNodeContainer.SelectNode(_treeData.RootNode);
     }
 
-    async Task AddArrayNode()
-    {
-        var newArrayNode = new MindMapArrayNode
-        {
-            Id = "newArrayId",
-            Topic = "new Array node",
-            Data = new Dictionary<string, string> { { "background-color", "darkred" } }
-        };
-
-        await _myArrayNodeContainer.SetEditable(true);
-        await _myArrayNodeContainer.AddNode(_arrayData1.Nodes.First(), newArrayNode);
-        await _myArrayNodeContainer.SetEditable(false);
-    }
 
     async Task ClearSelect()
     {
